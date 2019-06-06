@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pm.demo.mapper.ExecelMapper">
+    <select id="findAll" resultType="Execel">
+      select  * from Execel
+    </select>
+
+    <insert id="add" parameterType="Execel">
+        insert into Execel(id,pname,gdate,stime,etime,befoer,zname) values(#{id},#{pname},#{gdate},#{stime},#{etime},#{before},#{zname})
+    </insert>
+
+    <delete id="del">
+      delete from Execel
+    </delete>
+</mapper>

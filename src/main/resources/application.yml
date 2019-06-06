@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/peng?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
+    username: root
+    password: 1234
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+  thymeleaf:
+    cache: false
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+mybatis:
+  type-aliases-package: com.pm.demo.entity
+  mapper-locations: classpath:mapper/*.xml
