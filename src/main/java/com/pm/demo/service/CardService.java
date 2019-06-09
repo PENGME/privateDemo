@@ -1,8 +1,8 @@
 package com.pm.demo.service;
 
+import com.github.pagehelper.PageInfo;
 import com.pm.demo.entity.Card;
 
-import java.util.Date;
 import java.util.List;
 
 public interface CardService {
@@ -16,5 +16,6 @@ public interface CardService {
 
     int upd(Card card);
 
-    Date dateFormat(String vtime);
+    //分页
+    PageInfo<Card> findByPage(int pageNum, int pageSize);
 }

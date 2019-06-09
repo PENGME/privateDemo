@@ -1,19 +1,24 @@
 package com.pm.demo.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.pm.demo.entity.Card;
 import com.pm.demo.mapper.CardMapper;
 import com.pm.demo.service.CardService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @Service
 public class CardServiceImpl implements CardService {
-    @Autowired
+
     private CardMapper cardMapper;
+
+    public CardServiceImpl(CardMapper cardMapper) {
+        this.cardMapper = cardMapper;
+    }
 
     @Override
     public List<Card> findAll() {
@@ -29,8 +34,8 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public int add(Card card) {
-        int num=cardMapper.add(card);
-        System.out.println("受影响行数："+num);
+        int num = cardMapper.add(card);
+        System.out.println("受影响行数：" + num);
         return num;
     }
 
@@ -44,15 +49,15 @@ public class CardServiceImpl implements CardService {
         return cardMapper.upd(card);
     }
 
-    //字符串转时间
-    public Date dateFormat(String vtime){
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
-        Date date=null;
-        try {
-            date=simpleDateFormat.parse(vtime);
-        } catch(Exception px) {
-            px.printStackTrace();
-        }
-        return date;
+    //该方法查询到的数据集合，最终将以 emp.1、emp.2 形式的key存储在内存中
+    //当下一次调用该方法时，发现 emp.1 key时，直接从缓存中获取数据，该方法将不再执行
+    @Cacheable(value = "emp.page", key = "#p0")
+    @Override
+    public PageInfo<Card> findByPage(int pageNum, int pageSize) {
+        Page<Card> page = PageHelper.startPage(pageNum, pageSize);
+        cardMapper.findAll();
+        PageInfo<Card> pageInfo = new PageInfo<>(page);
+        return pageInfo;
     }
+
 }

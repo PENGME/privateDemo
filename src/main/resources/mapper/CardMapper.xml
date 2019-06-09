@@ -31,4 +31,5 @@
     <delete id="del">
       delete from card where id=#{id}
     </delete>
+
 </mapper>

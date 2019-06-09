@@ -8,7 +8,7 @@
     </select>
 
     <insert id="add" parameterType="Execel">
-        insert into Execel(id,pname,gdate,stime,etime,befoer,zname) values(#{id},#{pname},#{gdate},#{stime},#{etime},#{before},#{zname})
+        insert into Execel(id,pname,gdate,stime,etime,befoer,zname) values(default ,#{pname},#{gdate},#{stime},#{etime},#{before},#{zname})
     </insert>
 
     <delete id="del">

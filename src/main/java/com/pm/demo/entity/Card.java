@@ -1,8 +1,9 @@
 package com.pm.demo.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Card {
+public class Card implements Serializable {
     private int id;
     private String name;
     private Double sal;

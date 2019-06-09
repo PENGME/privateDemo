@@ -11,9 +11,10 @@
 </head>
 <body>
 <center>
+    <div class="col-5">
     <h3>信息列表</h3>
     <a href="/toAdd" class="ml-auto">添加</a>
-    <table class="table-bordered">
+    <table class="table table-bordered">
         <thead>
         <th>编号</th>
         <th>姓名</th>
@@ -22,16 +23,42 @@
         <th>操作</th>
         </thead>
         <tbody>
-        <!--/*@thymesVar id="cardList" type="com.pm.demo.entity.Card"*/-->
-        <tr th:each="c :${cardList}">
+        <tr th:each="c :${pageInfo.getList()}">
             <td th:text="${c.id}"></td>
             <td th:text="${c.name}"></td>
             <td th:text="${c.sal}"></td>
             <td th:text="${#dates.format(c.vdate,'yyyy-MM-dd')}"></td>
-            <td><a th:href="@{/toUpdate(id=${c.id})}" >修改</a> <a th:href="@{/doDelete(id=${c.id})}">删除</a></td>
+            <td><a th:href="@{/toUpdate(id=${c.id})}">修改</a> <a th:href="@{/doDelete(id=${c.id})}">删除</a></td>
         </tr>
         </tbody>
+       <tfoot>
+        <tr>
+            <td colspan="5">
+                <div class="row justify-content-center mt-2">
+                <div>
+                    <span>第<small th:text="${pageInfo.pageNum}"></small> /<small th:text="${pageInfo.pages}"></small>页，共<small th:text="${pageInfo.total}"></small>条数据。</span>
+                </div>
+                <div style="margin-top: -5px">
+                    <ul class="pagination pagination-sm">
+                        <li class="page-item" th:classappend="${pageInfo.pageNum<=1?'disabled':''}">
+                            <a th:href="@{'/show?pageNum='+${pageInfo.prePage}}" class="page-link">上一页</a>
+                        </li>
+
+                        <li class="page-item" th:each="i : ${pageInfo.navigatepageNums}" th:classappend="${i == pageInfo.pageNum?'active':''}">
+                            <a th:href="@{/show(pageNum=${i})}" class="page-link" th:text="${i}"></a>
+                        </li>
+
+                        <li class="page-item" th:classappend="${pageInfo.pageNum>=pageInfo.pages?'disabled':''}">
+                            <a th:href="@{'/show?pageNum='+${pageInfo.nextPage}}" class="page-link">下一页</a>
+                        </li>
+                    </ul>
+                </div>
+                </div>
+            </td>
+        </tr>
+        </tfoot>
     </table>
+    </div>
 </center>
 </body>
 </html>
