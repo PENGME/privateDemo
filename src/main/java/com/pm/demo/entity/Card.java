@@ -3,6 +3,7 @@ package com.pm.demo.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+//会员信息
 public class Card implements Serializable {
     private int id;
     private String name;
