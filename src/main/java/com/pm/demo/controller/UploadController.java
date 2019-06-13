@@ -4,6 +4,7 @@ import com.pm.demo.entity.Execel;
 import com.pm.demo.service.ExecelService;
 import com.pm.demo.util.ExcelUtil;
 import com.pm.demo.util.ReadExcel;
+import com.pm.demo.util.WriteExcel;
 import org.apache.commons.io.IOUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,33 +106,11 @@ public class UploadController {
     public void export(HttpServletResponse response) throws Exception {
         //获取数据
         List<Execel> list = execelService.findAll();
-        String [][] content=new String[list.size()][7];
-
-        //excel标题
-        String[] title = {"序号", "任务名称", "工期", "开始时间", "完成时间", "前置任务", "资源名称"};
+        //创建HSSFWorkbook
+        HSSFWorkbook wb= WriteExcel.writeExcel(list);
 
         //excel文件名
         String fileName = "任务点划分表" + System.currentTimeMillis() + ".xls";
-
-        //sheet名
-        String sheetName = "任务点划分表";
-
-        //读取数据库Excel，用二维数组装
-        for (int i = 0; i < list.size(); i++) {
-            content[i] = new String[title.length];
-            Execel obj = list.get(i);
-            content[i][0] = obj.getId();
-            content[i][1] = obj.getPname();
-            content[i][2] = obj.getGdate();
-            content[i][3] = obj.getStime();
-            content[i][4] = obj.getEtime();
-            content[i][5] = obj.getBefore();
-            content[i][6] = obj.getZname();
-        }
-
-        //创建HSSFWorkbook
-        HSSFWorkbook wb = ExcelUtil.getHSSFWorkbook(sheetName, title, content, null);
-
         //响应到客户端
         try {
             this.setResponseHeader(response, fileName);
