@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pm.demo.mapper.CardMapper">
+    <select id="findAll" resultType="Card">
+      select  * from card
+    </select>
+
+    <select id="findById" resultType="Card">
+      select  * from card where id=#{id}
+    </select>
+
+    <insert id="add" parameterType="Card">
+        <selectKey keyProperty="id" resultType="int" statementType="STATEMENT" order="BEFORE">
+            SELECT MAX(id)+1 FROM card
+        </selectKey>
+        insert into card(id,name,sal,vdate) values (#{id},#{name},#{sal},#{vdate})
+    </insert>
+
+    <update id="upd" parameterType="Card">
+        update card
+        <set>
+            name=#{name},
+            sal=#{sal},
+            vdate=#{vdate}
+        </set>
+        where id=#{id}
+    </update>
+
+    <delete id="del">
+      delete from card where id=#{id}
+    </delete>
+
+</mapper>

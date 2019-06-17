@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title>tableExcel表格</title>
+</head>
+<body>
+<center>
+    <table border="1">
+        <!--/*@thymesVar id="excelList" type="com.pm.demo.entity.Row"*/-->
+        <tr th:each="a:${excelList}" >
+            <td th:text="${a.id}"></td>
+            <td th:text="${a.pname}"></td>
+            <td th:text="${a.gdate}"></td>
+            <td th:text="${a.stime}"></td>
+            <td th:text="${a.etime}"></td>
+            <td th:text="${a.before}"></td>
+            <td th:text="${a.zname}"></td>
+        </tr>
+    </table>
+    <br>
+</center>
+</body>
+</html>
